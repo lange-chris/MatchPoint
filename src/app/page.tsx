@@ -1,32 +1,47 @@
 'use client';
 
 import { useState } from 'react';
-import JDInput from '@/components/JDInput';
-import CVUpload from '@/components/CVUpload';
-import MatchResults from '@/components/MatchResults';
+import JDInput from "@/components/JDInput";
+import CVUpload from "@/components/CVUpload";
+import MatchResults from "@/components/MatchResults";
 import { Button } from '@/components/ui/Button';
 import { Match } from '@/types';
 
 export default function Home() {
-  const [match, setMatch] = useState<Match | undefined>();
+  const [jdText, setJdText] = useState<string | null>(null);
+  const [cvUrl, setCvUrl] = useState<string | null>(null);
+  const [match, setMatch] = useState<Match | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Triggers the analysis against the mock /api/match endpoint.
-  // TODO (Julia → Isis + Chris): Replace this standalone button with a callback
-  // passed into CVUpload once Chris wires up onUploadComplete(cvUrl, cvText)
-  // and Isis wires up onJDConfirmed(jdText). At that point, call handleRunAnalysis
-  // with the real jd_text, cv_text, and cv_url values.
+  const handleJDConfirm = (text: string) => {
+    setJdText(text);
+    console.log('JD Successfully confirmed');
+  };
+
+  const handleUploadComplete = (url: string) => {
+    setCvUrl(url);
+    console.log('CV Successfully uploaded:', url);
+  };
+
   const handleRunAnalysis = async () => {
+    if (!jdText || !cvUrl) return;
+
     setIsLoading(true);
     setMatch(undefined);
     try {
       const res = await fetch('/api/match', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ jd_text: 'demo', cv_text: 'demo', cv_url: '' }),
+        body: JSON.stringify({ 
+          jd_text: jdText,
+          cv_text: 'Pending extraction...', // Future: Implement text extraction
+          cv_url: cvUrl 
+        }),
       });
       const json = await res.json();
       if (json.success) setMatch(json.data);
+    } catch (error) {
+      console.error('Analysis failed:', error);
     } finally {
       setIsLoading(false);
     }
@@ -47,23 +62,24 @@ export default function Home() {
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-          {/* Input Flow — Isis (JDInput) & Chris (CVUpload) — do not edit these components */}
+          {/* Input Flow (Isis & Chris) */}
           <div className="space-y-8">
-            <JDInput />
-            <CVUpload />
+            <JDInput onConfirm={handleJDConfirm} />
+            <CVUpload onUploadComplete={handleUploadComplete} />
+            
             <Button
               className="w-full"
               onClick={handleRunAnalysis}
               isLoading={isLoading}
-              disabled={isLoading}
+              disabled={isLoading || !cvUrl || !jdText}
             >
-              Run Analysis
+              {!jdText ? 'Confirm JD first' : !cvUrl ? 'Upload CV first' : 'Run Analysis'}
             </Button>
           </div>
 
-          {/* Results View — Julia */}
+          {/* Results View (Julia) */}
           <div className="lg:sticky lg:top-8">
-            <MatchResults match={match} isLoading={isLoading} />
+            <MatchResults match={match} />
           </div>
         </div>
       </div>

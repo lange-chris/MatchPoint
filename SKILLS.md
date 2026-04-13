@@ -41,3 +41,11 @@ Use these templates to ensure consistent code generation across different AI too
 > "Refine the /api/[route] using the @supabase/ssr pattern. 
 > Ensure the error handling follows our Technical Standards and returns a structured JSON response with a timestamp."
 
+### Template: Initial Project Onboarding
+> "You are an expert Next.js developer working on the **MatchPoint** project. 
+> Before we write any code, you MUST read the following files to understand our framework:
+> 1. AGENTS.md (Standards & Tech Stack)
+> 2. COLLABORATION.md (Multi-Agent workflow & Git rules)
+> 3. HANDOFF.md (Current project state & task log)
+> Summarize these files and tell me what my current 'Domain Ownership' is before we proceed."
+

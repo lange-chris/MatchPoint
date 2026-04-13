@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import JDInput from "@/components/JDInput";
 import CVUpload from "@/components/CVUpload";
 import MatchResults from "@/components/MatchResults";
@@ -12,6 +13,7 @@ export default function Home() {
   const [cvUrl, setCvUrl] = useState<string | null>(null);
   const [match, setMatch] = useState<Match | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleJDConfirm = (text: string) => {
     setJdText(text);
@@ -28,20 +30,22 @@ export default function Home() {
 
     setIsLoading(true);
     setMatch(undefined);
+    setError(null);
     try {
       const res = await fetch('/api/match', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          jd_text: jdText,
-          cv_text: 'Pending extraction...', // Future: Implement text extraction
-          cv_url: cvUrl 
-        }),
+        body: JSON.stringify({ jd_text: jdText, cv_url: cvUrl }),
       });
       const json = await res.json();
-      if (json.success) setMatch(json.data);
-    } catch (error) {
-      console.error('Analysis failed:', error);
+      if (json.success) {
+        setMatch(json.data);
+      } else {
+        setError(json.error ?? 'Analysis failed. Please try again.');
+      }
+    } catch (err) {
+      setError('Could not reach the server. Please try again.');
+      console.error('Analysis failed:', err);
     } finally {
       setIsLoading(false);
     }
@@ -56,8 +60,8 @@ export default function Home() {
             <p className="text-zinc-400 mt-2">Recruiter Edition | Multi-Agent Collaborative Project</p>
           </div>
           <div className="flex gap-4">
-            <a href="/history" className="text-sm text-zinc-500 hover:text-white transition-colors">History</a>
-            <a href="/analytics" className="text-sm text-zinc-500 hover:text-white transition-colors">Analytics</a>
+            <Link href="/history" className="text-sm text-zinc-500 hover:text-white transition-colors">History</Link>
+            <Link href="/analytics" className="text-sm text-zinc-500 hover:text-white transition-colors">Analytics</Link>
           </div>
         </header>
 
@@ -75,11 +79,16 @@ export default function Home() {
             >
               {!jdText ? 'Confirm JD first' : !cvUrl ? 'Upload CV first' : 'Run Analysis'}
             </Button>
+            {error && (
+              <p className="text-sm text-red-400 bg-red-400/10 border border-red-400/20 rounded-lg px-4 py-3">
+                {error}
+              </p>
+            )}
           </div>
 
           {/* Results View (Julia) */}
           <div className="lg:sticky lg:top-8">
-            <MatchResults match={match} />
+            <MatchResults match={match} isLoading={isLoading} />
           </div>
         </div>
       </div>

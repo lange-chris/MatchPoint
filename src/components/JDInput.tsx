@@ -14,12 +14,14 @@ export default function JDInput({ onConfirm }: JDInputProps) {
   const [url, setUrl] = useState('');
   const [isScraping, setIsScraping] = useState(false);
   const [scrapeError, setScrapeError] = useState('');
+  const [confirmed, setConfirmed] = useState(false);
 
   const handleClear = () => {
     setJdText('');
     setShowUrlInput(false);
     setUrl('');
     setScrapeError('');
+    setConfirmed(false);
   };
 
   const handleScrape = async () => {
@@ -45,6 +47,7 @@ export default function JDInput({ onConfirm }: JDInputProps) {
   const handleConfirm = () => {
     if (jdText.trim()) {
       onConfirm(jdText.trim());
+      setConfirmed(true);
     }
   };
 
@@ -82,10 +85,14 @@ export default function JDInput({ onConfirm }: JDInputProps) {
         )}
 
         <textarea
-          className="w-full h-48 bg-white/5 border border-white/10 rounded-xl p-4 text-sm text-zinc-300 focus:outline-none focus:border-white/20 transition-colors resize-none"
+          className={`w-full h-48 bg-white/5 border rounded-xl p-4 text-sm text-zinc-300 focus:outline-none transition-colors resize-none ${
+            confirmed
+              ? 'border-green-500/50 focus:border-green-500/70'
+              : 'border-white/10 focus:border-white/20'
+          }`}
           placeholder="Paste the job advertisement text here..."
           value={jdText}
-          onChange={(e) => setJdText(e.target.value)}
+          onChange={(e) => { setJdText(e.target.value); setConfirmed(false); }}
         />
 
         <div className="flex gap-2">
@@ -96,8 +103,13 @@ export default function JDInput({ onConfirm }: JDInputProps) {
           >
             Scrape from URL
           </Button>
-          <Button className="flex-1" disabled={!jdText.trim()} onClick={handleConfirm}>
-            Confirm JD
+          <Button
+            className={`flex-1 ${confirmed ? 'bg-green-500/20 text-green-400 border-green-500/40 hover:bg-green-500/30' : ''}`}
+            variant={confirmed ? 'outline' : 'primary'}
+            disabled={!jdText.trim()}
+            onClick={handleConfirm}
+          >
+            {confirmed ? '✓ JD Confirmed' : 'Confirm JD'}
           </Button>
         </div>
       </div>

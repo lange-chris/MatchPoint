@@ -4,16 +4,39 @@ import { useState } from 'react';
 import JDInput from "@/components/JDInput";
 import CVUpload from "@/components/CVUpload";
 import MatchResults from "@/components/MatchResults";
+import { Button } from '@/components/ui/Button';
 import { Match } from '@/types';
 
 export default function Home() {
   const [cvUrl, setCvUrl] = useState<string | null>(null);
-  const [matchResult, setMatchResult] = useState<Match | undefined>(undefined);
+  const [match, setMatch] = useState<Match | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleUploadComplete = (url: string) => {
     setCvUrl(url);
     console.log('CV Successfully uploaded:', url);
-    // Future: Trigger analysis automatically if JD is also present
+  };
+
+  const handleRunAnalysis = async () => {
+    setIsLoading(true);
+    setMatch(undefined);
+    try {
+      const res = await fetch('/api/match', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          jd_text: 'demo', // TODO: Link to Isis's JD state
+          cv_text: 'demo', // TODO: Implement text extraction
+          cv_url: cvUrl || '' 
+        }),
+      });
+      const json = await res.json();
+      if (json.success) setMatch(json.data);
+    } catch (error) {
+      console.error('Analysis failed:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -35,11 +58,20 @@ export default function Home() {
           <div className="space-y-8">
             <JDInput />
             <CVUpload onUploadComplete={handleUploadComplete} />
+            
+            <Button
+              className="w-full"
+              onClick={handleRunAnalysis}
+              isLoading={isLoading}
+              disabled={isLoading || !cvUrl}
+            >
+              {cvUrl ? 'Run Analysis' : 'Upload CV first'}
+            </Button>
           </div>
 
           {/* Results View (Julia) */}
           <div className="lg:sticky lg:top-8">
-            <MatchResults match={matchResult} />
+            <MatchResults match={match} />
           </div>
         </div>
       </div>

@@ -17,10 +17,10 @@ export const Button = ({
   ...props
 }: ButtonProps) => {
   const variants = {
-    primary: "bg-white text-black hover:bg-zinc-200 shadow-xl shadow-white/5",
-    secondary: "bg-white/10 text-white hover:bg-white/20 border border-white/10",
-    ghost: "bg-transparent text-zinc-400 hover:text-white hover:bg-white/5",
-    outline: "bg-transparent border border-white/20 text-white hover:border-white/40",
+    primary: "bg-white text-fuchsia-700 font-bold hover:bg-white/90 shadow-lg shadow-black/20",
+    secondary: "bg-white/20 text-white hover:bg-white/30 border border-white/30 backdrop-blur-sm",
+    ghost: "bg-transparent text-white/70 hover:text-white hover:bg-white/10",
+    outline: "bg-transparent border border-white/40 text-white hover:border-white/70 hover:bg-white/10",
   };
 
   const sizes = {
@@ -35,7 +35,7 @@ export const Button = ({
       whileTap={{ scale: 0.98 }}
       disabled={isLoading}
       className={cn(
-        "inline-flex items-center justify-center rounded-full font-semibold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed",
+        "inline-flex items-center justify-center rounded-full transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed",
         variants[variant],
         sizes[size],
         className

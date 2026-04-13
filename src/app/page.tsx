@@ -8,9 +8,15 @@ import { Button } from '@/components/ui/Button';
 import { Match } from '@/types';
 
 export default function Home() {
+  const [jdText, setJdText] = useState<string | null>(null);
   const [cvUrl, setCvUrl] = useState<string | null>(null);
   const [match, setMatch] = useState<Match | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
+
+  const handleJDConfirm = (text: string) => {
+    setJdText(text);
+    console.log('JD Successfully confirmed');
+  };
 
   const handleUploadComplete = (url: string) => {
     setCvUrl(url);
@@ -18,6 +24,8 @@ export default function Home() {
   };
 
   const handleRunAnalysis = async () => {
+    if (!jdText || !cvUrl) return;
+
     setIsLoading(true);
     setMatch(undefined);
     try {
@@ -25,9 +33,9 @@ export default function Home() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-          jd_text: 'demo', // TODO: Link to Isis's JD state
-          cv_text: 'demo', // TODO: Implement text extraction
-          cv_url: cvUrl || '' 
+          jd_text: jdText,
+          cv_text: 'Pending extraction...', // Future: Implement text extraction
+          cv_url: cvUrl 
         }),
       });
       const json = await res.json();
@@ -56,16 +64,16 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           {/* Input Flow (Isis & Chris) */}
           <div className="space-y-8">
-            <JDInput />
+            <JDInput onConfirm={handleJDConfirm} />
             <CVUpload onUploadComplete={handleUploadComplete} />
             
             <Button
               className="w-full"
               onClick={handleRunAnalysis}
               isLoading={isLoading}
-              disabled={isLoading || !cvUrl}
+              disabled={isLoading || !cvUrl || !jdText}
             >
-              {cvUrl ? 'Run Analysis' : 'Upload CV first'}
+              {!jdText ? 'Confirm JD first' : !cvUrl ? 'Upload CV first' : 'Run Analysis'}
             </Button>
           </div>
 

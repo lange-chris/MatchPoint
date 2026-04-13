@@ -1,8 +1,21 @@
+'use client';
+
+import { useState } from 'react';
 import JDInput from "@/components/JDInput";
 import CVUpload from "@/components/CVUpload";
 import MatchResults from "@/components/MatchResults";
+import { Match } from '@/types';
 
 export default function Home() {
+  const [cvUrl, setCvUrl] = useState<string | null>(null);
+  const [matchResult, setMatchResult] = useState<Match | undefined>(undefined);
+
+  const handleUploadComplete = (url: string) => {
+    setCvUrl(url);
+    console.log('CV Successfully uploaded:', url);
+    // Future: Trigger analysis automatically if JD is also present
+  };
+
   return (
     <main className="min-h-screen bg-[#0a0a0a] text-white p-8 md:p-24">
       <div className="max-w-6xl mx-auto">
@@ -21,12 +34,12 @@ export default function Home() {
           {/* Input Flow (Isis & Chris) */}
           <div className="space-y-8">
             <JDInput />
-            <CVUpload />
+            <CVUpload onUploadComplete={handleUploadComplete} />
           </div>
 
           {/* Results View (Julia) */}
           <div className="lg:sticky lg:top-8">
-            <MatchResults />
+            <MatchResults match={matchResult} />
           </div>
         </div>
       </div>

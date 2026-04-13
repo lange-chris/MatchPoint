@@ -7,13 +7,13 @@ This file is the "Shared Memory" for AI agents. Before ending a session, the cur
 **Agent**: Gemini 1.5 Pro (Antigravity)
 
 ### Recently Finished:
-- ✅ **Efficiency Framework**: Created `src/types/index.ts` (Team Contract).
-- ✅ **UI Anchor**: Built `GlassCard` and `Button` primitives in `src/components/ui`.
-- ✅ **API Mocking**: The `/api/match` route now returns a valid `Match` object.
+- ✅ **CV Upload Logic (Chris)**: Fully implemented file selection, drag-and-drop, and Supabase Storage upload in `CVUpload.tsx`.
+- ✅ **Dashboard Integration**: Hooked up the `cvUrl` state in `page.tsx` via callbacks.
+- ✅ **Efficiency Framework**: Shared types and UI primitives are live.
 
 ### Pending Tasks / Blockers:
-- [ ] **Infrastructure**: Run `database_schema.sql` and create `cv-uploads` bucket.
-- [ ] **Parallel Build**: Engineers B and C can now build UIs using the mock API and shared components.
+- [ ] **JD Input (Isis)**: Need to implement the scraping and JD confirmation logic.
+- [ ] **Analysis Dashboard (Julia)**: Need to implement the real processing and results display.
 
 ---
 

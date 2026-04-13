@@ -29,3 +29,4 @@ This file is the "Shared Memory" for AI agents. Before ending a session, the cur
 
 ## Log History
 - **2026-04-13**: Initialized collaboration framework. Established `COLLABORATION.md`. [AI: Gemini]
+- **2026-04-13**: Completed `JDInput.tsx` for Isis — wired Clear, Scrape from URL (mocked), and Confirm JD (`onConfirm` prop). Component is ready for parent integration. [AI: Claude Sonnet 4.6]

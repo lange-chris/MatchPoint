@@ -32,8 +32,8 @@ When switching from a terminal-based AI (like Antigravity) to a web-based AI (li
 
 | Domain | Owner | Main Path |
 | :--- | :--- | :--- |
-| **Intelligence Engine** | Developer A | `/src/app/api/match` |
-| **Recruiter Portal** | Developer B | `/src/app/page.tsx` |
-| **Analytics & History** | Developer C | `/src/app/analytics`, `/src/app/history` |
+| **Intelligence & Analytics** | **Julia** | `/src/app/analytics`, `/src/app/history` |
+| **JD Input & Scraping** | **Isis** | `src/components/JDInput.tsx` |
+| **CV Upload & Storage** | **Chris** | `src/components/CVUpload.tsx` |
 
 *Last Updated: 2026-04-13*

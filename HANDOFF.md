@@ -7,22 +7,23 @@ This file is the "Shared Memory" for AI agents. Before ending a session, the cur
 **Agent**: Gemini 1.5 Pro (Antigravity)
 
 ### Recently Finished:
-- ✅ **Collaboration Framework**: Created `COLLABORATION.md` and `HANDOFF.md`.
-- ✅ **Context Sync**: Updated `AGENTS.md` and `README.md`.
-- ✅ **Work-Split Scaffolding**: Initialized folders for Intelligence, Portal, and Analytics.
-- ✅ **Supabase Integration**: Set up `.env.local`, `src/lib/supabase.ts`, and `database_schema.sql`.
+- ✅ **Efficiency Framework**: Created `src/types/index.ts` (Team Contract).
+- ✅ **UI Anchor**: Built `GlassCard` and `Button` primitives in `src/components/ui`.
+- ✅ **API Mocking**: The `/api/match` route now returns a valid `Match` object.
 
 ### Pending Tasks / Blockers:
-- [ ] **Database Initialization**: User needs to run `database_schema.sql` in Supabase.
-- [ ] **Storage Bucket**: User needs to create a `cv-uploads` bucket in Supabase.
+- [ ] **Infrastructure**: Run `database_schema.sql` and create `cv-uploads` bucket.
+- [ ] **Parallel Build**: Engineers B and C can now build UIs using the mock API and shared components.
 
 ---
 
 ## Instructions for the Next Agent:
-1. READ `AGENTS.md` to understand the tech stack.
-2. READ `COLLABORATION.md` to follow the commit/git rules.
+1. READ `AGENTS.md` and `COLLABORATION.md`.
+2. **Consult specific owners** if modifying their domains:
+   - **Julia**: Dashboard & Analytics logic.
+   - **Isis**: JD Input & Scraping logic.
+   - **Chris**: CV Upload & Storage logic.
 3. Consult the log above to see where we left off.
-4. If you make major changes, update this file!
 
 ---
 

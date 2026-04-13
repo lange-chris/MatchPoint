@@ -52,16 +52,16 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-[#0a0a0a] text-white p-8 md:p-24">
+    <main className="min-h-screen text-white p-8 md:p-24">
       <div className="max-w-6xl mx-auto">
         <header className="mb-12 flex justify-between items-end">
           <div>
-            <h1 className="text-6xl font-black italic tracking-tighter">MatchPoint</h1>
-            <p className="text-zinc-400 mt-2">Recruiter Edition | Multi-Agent Collaborative Project</p>
+            <h1 className="text-6xl font-black italic tracking-tighter bg-gradient-to-r from-white via-pink-200 to-cyan-200 bg-clip-text text-transparent drop-shadow-lg">MatchPoint</h1>
+            <p className="text-white/70 mt-2">Recruiter Edition | Multi-Agent Collaborative Project</p>
           </div>
           <div className="flex gap-4">
-            <Link href="/history" className="text-sm text-zinc-500 hover:text-white transition-colors">History</Link>
-            <Link href="/analytics" className="text-sm text-zinc-500 hover:text-white transition-colors">Analytics</Link>
+            <Link href="/history" className="text-sm text-white/60 hover:text-white transition-colors">History</Link>
+            <Link href="/analytics" className="text-sm text-white/60 hover:text-white transition-colors">Analytics</Link>
           </div>
         </header>
 
@@ -80,7 +80,7 @@ export default function Home() {
               {!jdText ? 'Confirm JD first' : !cvUrl ? 'Upload CV first' : 'Run Analysis'}
             </Button>
             {error && (
-              <p className="text-sm text-red-400 bg-red-400/10 border border-red-400/20 rounded-lg px-4 py-3">
+              <p className="text-sm text-white bg-red-500/30 border border-red-300/40 rounded-lg px-4 py-3 backdrop-blur-sm">
                 {error}
               </p>
             )}

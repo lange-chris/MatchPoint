@@ -55,3 +55,11 @@ To ensure consistency across different AI tools (Gemini, Claude) and developers:
 - **Supabase Connectivity**:
   - Use the `@supabase/ssr` pattern for all Auth and Data fetching.
 
+## Agent Initialization (Vibe Context)
+
+Every AI session must start by reading this file and `COLLABORATION.md`. This ensures that the AI is aware of the "Recruiter Edition" constraints and doesn't suggest features outside of the scope (like auth or payments).
+
+> [!TIP]
+> **Suggested System Prompt Update**: 
+> "You are an expert Next.js developer working on MatchPoint. Your source of truth for standards is AGENTS.md. Your source of truth for team workflow is COLLABORATION.md. You MUST check HANDOFF.md before suggesting new code."
+

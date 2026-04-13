@@ -42,8 +42,9 @@ MatchPoint is an AI-powered tool that compares a CV with a job advertisement to 
 
 This project is built using a **"Vibe Coding"** approach. To ensure consistency between developers using **Claude (VS Code)** and **Gemini (Antigravity)**:
 
-1. **Always point the AI to `AGENTS.md`**: Whenever starting a new session or feature, tell your AI assistant to read the `AGENTS.md` file first.
-2. **Follow Technical Standards**: Stick to the component patterns and styling rules defined in `AGENTS.md`.
-3. **Use Shared Prompts**: Check `SKILLS.md` for "Universal Prompt Templates" to get consistent code output.
+1. **Always point the AI to `AGENTS.md` and `COLLABORATION.md`**: Whenever starting a new session or feature, tell your AI assistant to read these files first.
+2. **Consult [COLLABORATION.md](file:///c:/Users/chris/neuefische_course/Week11/MatchPoint/COLLABORATION.md)**: Follow the protocol for Git tagging and AI-to-AI handoffs.
+3. **Follow Technical Standards**: Stick to the component patterns and styling rules defined in `AGENTS.md`.
+4. **Use Shared Prompts**: Check `SKILLS.md` for "Universal Prompt Templates" to get consistent code output.
 4. **Format on Save**: Ensure you have the **Prettier** extension installed in VS Code to maintain style alignment.
 
